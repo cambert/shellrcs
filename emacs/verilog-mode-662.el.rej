@@ -1,0 +1,25 @@
+***************
+*** 116,126 ****
+  ;; (This section is required to appease checkdoc.)
+  
+  ;;; Code:
+  
+  ;; This variable will always hold the version number of the mode
+- (defconst verilog-mode-version (substring "$$Revision: 631 $$" 12 -3)
+    "Version of this Verilog mode.")
+  (defconst verilog-mode-release-date (substring "$$Date: 2010-07-23 00:12:08 +0000 (Fri, 23 Jul 2010) $$" 8 -3)
+    "Release date of this Verilog mode.")
+  (defconst verilog-mode-release-emacs nil
+    "If non-nil, this version of Verilog mode was released with Emacs itself.")
+--- 116,126 ----
+  ;; (This section is required to appease checkdoc.)
+  
+  ;;; Code:
+  
+  ;; This variable will always hold the version number of the mode
++ (defconst verilog-mode-version (substring "$$Revision: 631a $$" 12 -3)
+    "Version of this Verilog mode.")
+  (defconst verilog-mode-release-date (substring "$$Date: 2010-07-23 00:12:08 +0000 (Fri, 23 Jul 2010) $$" 8 -3)
+    "Release date of this Verilog mode.")
+  (defconst verilog-mode-release-emacs nil
+    "If non-nil, this version of Verilog mode was released with Emacs itself.")

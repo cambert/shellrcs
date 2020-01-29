@@ -1,0 +1,181 @@
+--- verilog-mode-531.el	2009-08-06 09:30:13.178324000 +0100
++++ verilog-mode.el	2010-01-22 13:16:34.513734000 +0000
+@@ -118,7 +118,7 @@
+ ;;; Code:
+ 
+ ;; This variable will always hold the version number of the mode
+-(defconst verilog-mode-version (substring "$$Revision: 531 $$" 12 -3)
++(defconst verilog-mode-version (substring "$$Revision: 531a $$" 12 -3)
+   "Version of this Verilog mode.")
+ (defconst verilog-mode-release-date (substring "$$Date: 2009-07-22 16:50:42 +0000 (Wed, 22 Jul 2009) $$" 8 -3)
+   "Release date of this Verilog mode.")
+@@ -5344,15 +5344,20 @@
+              ((or (and verilog-indent-declaration-macros
+                        (looking-at verilog-declaration-re-2-macro))
+                   (looking-at verilog-declaration-re-2-no-macro))
+-              (let ((p (match-end 0)))
++              (let ((p (match-end 0)) mbits)
+                 (set-marker m1 p)
+                 (if (verilog-re-search-forward "[[#`]" p 'move)
+                     (progn
+                       (forward-char -1)
+                       (just-one-space)
++                      (setq mbits (point))
+                       (goto-char (marker-position m1))
+                       (just-one-space)
+-                      (indent-to ind))
++                      (if (< (current-column) ind)
++                          (let ((spaces (- ind (current-column))))
++                            (goto-char mbits)
++                            (indent-to (+ (current-column) spaces)))
++                        (indent-to ind)))
+                   (progn
+                     (just-one-space)
+                     (indent-to ind)))))
+@@ -5517,29 +5522,39 @@
+ 	      (indent-line-to val)
+ 	      (if (and verilog-indent-declaration-macros
+ 		       (looking-at verilog-declaration-re-2-macro))
+-		  (let ((p (match-end 0)))
++		  (let ((p (match-end 0)) mbits)
+ 		    (set-marker m1 p)
+ 		    (if (verilog-re-search-forward "[[#`]" p 'move)
+ 			(progn
+ 			  (forward-char -1)
+ 			  (just-one-space)
++			  (setq mbits (point))
+ 			  (goto-char (marker-position m1))
+ 			  (just-one-space)
+-			  (indent-to ind))
++			  (if (< (current-column) ind)
++			      (let ((spaces (- ind (current-column))))
++				(goto-char mbits)
++				(indent-to (+ (current-column) spaces)))
++			  (indent-to ind)))
+ 		      (if (/= (current-column) ind)
+ 			  (progn
+ 			    (just-one-space)
+ 			    (indent-to ind)))))
+ 		(if (looking-at verilog-declaration-re-2-no-macro)
+-		    (let ((p (match-end 0)))
++		    (let ((p (match-end 0)) mbits)
+ 		      (set-marker m1 p)
+ 		      (if (verilog-re-search-forward "[[`#]" p 'move)
+ 			  (progn
+ 			    (forward-char -1)
+ 			    (just-one-space)
++			    (setq mbits (point))
+ 			    (goto-char (marker-position m1))
+ 			    (just-one-space)
+-			    (indent-to ind))
++			    (if (< (current-column) ind)
++				(let ((spaces (- ind (current-column))))
++				  (goto-char mbits)
++				  (indent-to (+ (current-column) spaces)))
++			      (indent-to ind)))
+ 			(if (/= (current-column) ind)
+ 			    (progn
+ 			      (just-one-space)
+@@ -6198,62 +6213,43 @@
+   (interactive)
+   (let ((start (point)))
+   (insert "\
+-//-----------------------------------------------------------------------------
+-// Title         : <title>
+-// Project       : <project>
+-//-----------------------------------------------------------------------------
+-// File          : <filename>
+-// Author        : <author>
+-// Created       : <credate>
+-// Last modified : <moddate>
+-//-----------------------------------------------------------------------------
+-// Description :
+-// <description>
+-//-----------------------------------------------------------------------------
+-// Copyright (c) <copydate> by <company> This model is the confidential and
+-// proprietary property of <company> and the possession or use of this
+-// file requires a written license from <company>.
+-//------------------------------------------------------------------------------
+-// Modification history :
+-// <modhist>
+-//-----------------------------------------------------------------------------
++/* ************************************************************************* *
++   Copyright (c) <copydate> by <company> 
+ 
++   FILE
++      <filename>
++
++   DESCRIPTION
++      <cursor>
++
++   MODIFICATIONS
++      1.0   <credate>  <user>  Created
++
++
++* ************************************************************************* */
+ ")
+     (goto-char start)
++    (search-forward "<copydate>") 
++    (replace-match "" t t)
++    (verilog-insert-year)
++    (goto-char start)
++    (search-forward "<company>")
++    (replace-match verilog-company t t)
++    (goto-char start)
+     (search-forward "<filename>")
+     (replace-match (buffer-name) t t)
+-    (search-forward "<author>") (replace-match "" t t)
+-    (insert (user-full-name))
+-    (insert "  <" (user-login-name) "@" (system-name) ">")
+-    (search-forward "<credate>") (replace-match "" t t)
+-    (verilog-insert-date)
+-    (search-forward "<moddate>") (replace-match "" t t)
+-    (verilog-insert-date)
+-    (search-forward "<copydate>") (replace-match "" t t)
+-    (verilog-insert-year)
+-    (search-forward "<modhist>") (replace-match "" t t)
++    (goto-char start)
++    (search-forward "<credate>")
++    (replace-match "" t t)
+     (verilog-insert-date)
+-    (insert " : created")
+     (goto-char start)
+-    (let (string)
+-      (setq string (read-string "title: "))
+-      (search-forward "<title>")
+-      (replace-match string t t)
+-      (setq string (read-string "project: " verilog-project))
+-      (setq verilog-project string)
+-      (search-forward "<project>")
+-      (replace-match string t t)
+-      (setq string (read-string "Company: " verilog-company))
+-      (setq verilog-company string)
+-      (search-forward "<company>")
+-      (replace-match string t t)
+-      (search-forward "<company>")
+-      (replace-match string t t)
+-      (search-forward "<company>")
+-      (replace-match string t t)
+-      (search-backward "<description>")
+-      (replace-match "" t t))))
+-
++    (search-forward "<user>")
++    (replace-match "" t t)
++    (insert (user-full-name))
++    (goto-char start)
++    (search-forward "<cursor>"))
++    (replace-match "" t t)
++)
+ ;; verilog-header Uses the verilog-insert-date function
+ 
+ (defun verilog-insert-date ()
+@@ -7739,7 +7735,8 @@
+ 					    (file-name-directory current))
+ 		   chkexts (if check-ext verilog-library-extensions `("")))
+ 	     (while chkexts
+-	       (setq fn (expand-file-name (concat filename (car chkexts))
++               ;; TCC
++	       (setq fn (expand-file-name (concat (downcase filename) (car chkexts))
+ 					  chkdir))
+ 	       ;;(message "Check for %s" fn)
+ 	       (if (verilog-dir-file-exists-p fn)

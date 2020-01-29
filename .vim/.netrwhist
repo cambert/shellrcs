@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/projects/pd/pj00410/users/robwal01/HVF3024/logical/kit/kvs_snapshot_2018_10_10/share/lib/kit_mob_lib/scp/src'
+let g:netrw_dirhist_2='/projects/pd/pj00410/users/robwal01/FUF_primo_1023/builds/v8he36_herc1_1fpga_primo_20191104_1535/redcomp.out/rtlc/_red_veloce.log'
+let g:netrw_dirhist_3='/projects/pd/pj00410/users/robwal01/FUF_primo_1023/builds/v8he36_herc1_1fpga_primo_20191104_1535/redcomp.out/rtlc/_red_veloce.log/rtlc_partitions'
+let g:netrw_dirhist_4='/projects/pd/pj00410/users/robwal01/FUF_primo_1023/builds/v8he36_herc1_1fpga_primo_20191104_1535/redcomp.out/rtlc/_red_veloce.log'
+let g:netrw_dirhist_5='/projects/pd/pj00410/users/robwal01/FUF_primo_1023/builds/v8he36_herc1_1fpga_primo_20191104_1535/redcomp.out/rtlc/_red_veloce.log/rtlc_partitions'
+let g:netrw_dirhist_6='/tmp/v8he38_ana2_hera1_herc1_dual_6fpga_haps80_20191026_2208-robwal01-HAPS103/HAPS_debug_scripts'
+let g:netrw_dirhist_7='/home/robwal01'

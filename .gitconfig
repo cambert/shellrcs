@@ -1,0 +1,29 @@
+[user]
+
+name = Robert Walczyk
+email = robertwalczyk@gmail.com
+
+[diff]
+tool = p4merge
+
+[alias]
+d = difftool
+st = status
+
+[merge]
+keepBackup = false;
+tool = p4merge
+
+[mergetool "p4merge"]
+path = /arm/tools/perforce/p4merge/2015.2.1315639/linux/bin/p4merge
+cmd = /arm/tools/perforce/p4merge/2015.2.1315639/linux/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+
+keepTemporaries = false
+trustExitCode = false
+keepBackup = false
+
+[difftool]
+prompt = false
+
+[mergetool]
+prompt = false

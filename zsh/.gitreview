@@ -1,0 +1,5 @@
+[gerrit]
+host=ds-gerrit.euhpc.arm.com
+port=29418
+project=emutools/zsh
+defaultbranch=master

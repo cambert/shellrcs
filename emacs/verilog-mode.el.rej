@@ -1,0 +1,55 @@
+***************
+*** 118,124 ****
+  ;;; Code:
+  
+  ;; This variable will always hold the version number of the mode
+- (defconst verilog-mode-version (substring "$$Revision: 531 $$" 12 -3)
+    "Version of this Verilog mode.")
+  (defconst verilog-mode-release-date (substring "$$Date: 2009-07-22 16:50:42 +0000 (Wed, 22 Jul 2009) $$" 8 -3)
+    "Release date of this Verilog mode.")
+--- 118,124 ----
+  ;;; Code:
+  
+  ;; This variable will always hold the version number of the mode
++ (defconst verilog-mode-version (substring "$$Revision: 531a $$" 12 -3)
+    "Version of this Verilog mode.")
+  (defconst verilog-mode-release-date (substring "$$Date: 2009-07-22 16:50:42 +0000 (Wed, 22 Jul 2009) $$" 8 -3)
+    "Release date of this Verilog mode.")
+***************
+*** 5344,5358 ****
+               ((or (and verilog-indent-declaration-macros
+                         (looking-at verilog-declaration-re-2-macro))
+                    (looking-at verilog-declaration-re-2-no-macro))
+-               (let ((p (match-end 0)))
+                  (set-marker m1 p)
+                  (if (verilog-re-search-forward "[[#`]" p 'move)
+                      (progn
+                        (forward-char -1)
+                        (just-one-space)
+                        (goto-char (marker-position m1))
+                        (just-one-space)
+-                       (indent-to ind))
+                    (progn
+                      (just-one-space)
+                      (indent-to ind)))))
+--- 5344,5363 ----
+               ((or (and verilog-indent-declaration-macros
+                         (looking-at verilog-declaration-re-2-macro))
+                    (looking-at verilog-declaration-re-2-no-macro))
++               (let ((p (match-end 0)) mbits)
+                  (set-marker m1 p)
+                  (if (verilog-re-search-forward "[[#`]" p 'move)
+                      (progn
+                        (forward-char -1)
+                        (just-one-space)
++                       (setq mbits (point))
+                        (goto-char (marker-position m1))
+                        (just-one-space)
++                       (if (< (current-column) ind)
++                           (let ((spaces (- ind (current-column))))
++                             (goto-char mbits)
++                             (indent-to (+ (current-column) spaces)))
++                         (indent-to ind)))
+                    (progn
+                      (just-one-space)
+                      (indent-to ind)))))
