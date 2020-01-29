@@ -125,9 +125,9 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (setq column-number-mode t)
 
 
-(setq server-host (system-name)
-                server-use-tcp t)
-(server-start)
+;;(setq server-host (system-name)
+;;                server-use-tcp t)
+;;(server-start)
 ;; (require 'smooth-scrol)
 ;; (add-to-list 'load-path "/path/to/drag-stuff")
 (require 'drag-stuff)

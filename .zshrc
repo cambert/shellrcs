@@ -3,7 +3,7 @@
 # export PATH=$HOME/bin:/usr/local/bin
 # echo $PATH
 # Path to your oh-my-zsh installation.
-export ZSH="/home/robwal01/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -74,8 +74,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 
 
-
 source $ZSH/oh-my-zsh.sh
+#source /home/cambert/.oh-my-zsh/oh-my-zsh.sh
 
 
 
@@ -211,12 +211,12 @@ select-word-style normal
 
 ###############################################
 # CUSTOM ALIASSES
-source /home/robwal01/zsh/plugins/arm/zsh-setup.zsh
-module load arm/cluster
+#source ~/zsh/plugins/arm/zsh-setup.zsh
+#module load arm/cluster
 
 
 alias l="ls --group-directories-first"
-alias ll="ls -la --group-directories-first"
+alias ll="ls -ltr --group-directories-first"
 # alias ll="ls -ltra --group-directories-first --color=tty "
 alias pd="pushd"
 
@@ -284,21 +284,21 @@ alias tf="tail -f "
 
 alias clonefuf="git clone ssh://robwal01@eu-gerrit-2.euhpc.arm.com:29418/fpga/FPGA_projects"
 
-module load util
-module load eda
-module load swdev
-module load apache/subversion/1.9.4
-module load git/git/2.16.1
-module load python/python/2.7.8
-module load python/git-review_py2.7.8/1.26.0
-module load vim/vim/7.3
-module load gnu/emacs/26.1
-module load jonas/tig/2.4.1
+#module load util
+#module load eda
+#module load swdev
+#module load apache/subversion/1.9.4
+#module load git/git/2.16.1
+#module load python/python/2.7.8
+#module load python/git-review_py2.7.8/1.26.0
+#module load vim/vim/7.3
+#module load gnu/emacs/26.1
+#module load jonas/tig/2.4.1
 
-# jq to parse json format, e.g.  fpga cat-board --name HAPS101 | jq '.'
-module load stedolan/jq/1.5
-# git review instead of direct push
-molo python/git-review_py2.7.8/1.25.0
+## jq to parse json format, e.g.  fpga cat-board --name HAPS101 | jq '.'
+#module load stedolan/jq/1.5
+## git review instead of direct push
+#molo python/git-review_py2.7.8/1.25.0
 
 # alias j4b="echo setenv DISPLAY $DISPLAY > /arm/projectscratch/pd/pj00410/users/robwal01/sandbox/DISPLAY_SET_ENV.csh; cp ~/.Xauthority /arm/projectscratch/pd/pj00410/users/robwal01/sandbox/.Xauthority; chmod 755 /arm/projectscratch/pd/pj00410/users/robwal01/sandbox/.Xauthority; ssh bitbld02@gb-hpc-jenkins4 -XY"
 # alias j4="echo setenv DISPLAY $DISPLAY > /arm/projectscratch/pd/pj00410/users/robwal01/sandbox/DISPLAY_SET_ENV.csh; cp ~/.Xauthority /arm/projectscratch/pd/pj00410/users/robwal01/sandbox/.Xauthority; ssh gb-hpc-jenkins4 -XY"
@@ -357,3 +357,13 @@ pasteJqCommand () {
 }
 zle -N pasteJqCommand
 bindkey '^J' pasteJqCommand
+
+
+# HOME END mapping 
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
